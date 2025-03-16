@@ -26,7 +26,7 @@ A real-time American Sign Language (ASL) recognition system that detects hand si
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/asl-recognition.git
+git clone https://github.com/Masuod.fathi@gmail.com/asl-recognition.git
 cd asl-recognition
 ```
 
