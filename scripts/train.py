@@ -4,6 +4,8 @@ import tensorflow as tf
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
 from preprocess import preprocess_data
+import pickle
+import os
 
 def build_model(input_shape, num_classes):
     model = Sequential([
@@ -17,11 +19,20 @@ def build_model(input_shape, num_classes):
     return model
 
 if __name__ == "__main__":
-    dataset_folder = "data/raw/train"  # Update this path to your dataset location
+    # Create models directory if it doesn't exist
+    os.makedirs('../models', exist_ok=True)
+    
+    dataset_folder = "../data/train"
     images, labels, label_encoder = preprocess_data(dataset_folder)
     input_shape = (64, 64, 3)
     num_classes = len(label_encoder.classes_)
     
     model = build_model(input_shape, num_classes)
     model.fit(images, labels, epochs=10, validation_split=0.2)
-    model.save('models/asl_model.h5')
+    
+    # Save the model
+    model.save('../models/asl_model.h5')
+    
+    # Save the label encoder
+    with open('../models/label_encoder.pkl', 'wb') as f:
+        pickle.dump(label_encoder, f)
